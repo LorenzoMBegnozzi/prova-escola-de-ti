@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/perifericos")
 public class ControllerPeriferico {
     private final ServicePeriferico servicePeriferico;
 
@@ -34,4 +36,3 @@ public class ControllerPeriferico {
         servicePeriferico.excluir(id);
     }
 }
-

@@ -14,7 +14,7 @@ public class ComputadorAdapter {
                 .build();
     }
 
-    public static EntityComputador ToEntity(ComputadorDTO dto) {
+    public static EntityComputador toEntity(ComputadorDTO dto) {
         return EntityComputador.builder()
                 .id(dto.getId())
                 .nome(dto.getNome())

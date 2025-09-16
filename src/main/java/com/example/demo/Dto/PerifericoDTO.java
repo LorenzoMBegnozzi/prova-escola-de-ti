@@ -17,7 +17,7 @@ public class PerifericoDTO {
     @NotBlank(message = "O nome do periferico é obrigatório")
     private String nome;
 
-    private Long ComputadorId;
+    private Long computadorId;
 
     private String ComputadorNome;
 }

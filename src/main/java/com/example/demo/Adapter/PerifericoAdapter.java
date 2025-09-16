@@ -10,7 +10,7 @@ public class PerifericoAdapter {
         return PerifericoDTO.builder()
                 .id(entityPeriferico.getId())
                 .nome(entityPeriferico.getNome())
-                .ComputadorId(entityPeriferico.getEntityComputador() != null ? entityPeriferico.getEntityComputador().getId() : null)
+                .computadorId(entityPeriferico.getEntityComputador() != null ? entityPeriferico.getEntityComputador().getId() : null)
                 .ComputadorNome(entityPeriferico.getEntityComputador() != null ? entityPeriferico.getEntityComputador().getNome() : null)
                 .build();
     }
@@ -19,6 +19,7 @@ public class PerifericoAdapter {
         return EntityPeriferico.builder()
                 .id(dto.getId())
                 .nome(dto.getNome())
+                .entityComputador(entityComputador)
                 .build();
     }
 }

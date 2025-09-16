@@ -19,9 +19,10 @@ public class ServiceComputador {
     }
 
     public ComputadorDTO salvar(ComputadorDTO dto) {
-        EntityComputador entityComputador = ComputadorAdapter.ToEntity(dto);
+        EntityComputador entityComputador = ComputadorAdapter.toEntity(dto);
         return ComputadorAdapter.toDTO(repository.save(entityComputador));
     }
+
     public List<ComputadorDTO> listar() {
         return repository.findAll()
                 .stream()
@@ -30,14 +31,16 @@ public class ServiceComputador {
     }
 
     public ComputadorDTO atualizar(Long id, ComputadorDTO dto) {
-        EntityComputador existente = (EntityComputador) repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+        EntityComputador existente = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Computador n encontrado"));
         existente.setNome(dto.getNome());
+        existente.setCor(dto.getCor());
+        existente.setData(dto.getData());
+
         return ComputadorAdapter.toDTO(repository.save(existente));
     }
 
     public void excluir(Long id) {
         repository.deleteById(id);
     }
-}
 }

@@ -26,7 +26,7 @@ public class ControllerComputador {
         return serviceComputador.listar();
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ComputadorDTO atualizar(@PathVariable Long id, @Valid @RequestBody ComputadorDTO dto) {
         return serviceComputador.atualizar(id, dto);
     }
@@ -36,4 +36,3 @@ public class ControllerComputador {
         serviceComputador.excluir(id);
     }
 }
-

@@ -22,7 +22,6 @@ public class EntityPeriferico {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "periferico_id")
+    @JoinColumn(name = "computador_id")
     private EntityComputador entityComputador;
-
 }

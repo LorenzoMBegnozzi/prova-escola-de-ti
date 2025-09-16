@@ -13,42 +13,47 @@ import java.util.stream.Collectors;
 
 @Service
 public class ServicePeriferico {
-    private final RepositoryPerifirico repositoryPerifirico;
+
+    private final RepositoryPerifirico repositoryPeriferico;
     private final RepositoryComputador repositoryComputador;
 
-    public ServicePeriferico(RepositoryPerifirico repositoryPerifirico, RepositoryComputador repositoryComputador) {
-        this.repositoryPerifirico = repositoryPerifirico;
+    public ServicePeriferico(RepositoryPerifirico repositoryPeriferico,
+                             RepositoryComputador repositoryComputador) {
+        this.repositoryPeriferico = repositoryPeriferico;
         this.repositoryComputador = repositoryComputador;
     }
 
     public PerifericoDTO salvar(PerifericoDTO dto) {
-        EntityComputador entityComputador = repositoryComputador.findById(dto.getCategoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+        EntityComputador computador = repositoryComputador.findById(dto.getComputadorId())
+                .orElseThrow(() -> new RuntimeException("computador não encontrado"));
 
-        EntityPeriferico entityPeriferico = PerifericoAdapter.toEntity(dto, entityComputador);
-        return PerifericoAdapter.toDTO(repositoryPerifirico.save(produto));
+        EntityPeriferico entity = PerifericoAdapter.toEntity(dto, computador);
+        return PerifericoAdapter.toDTO(repositoryPeriferico.save(entity));
     }
 
     public List<PerifericoDTO> listar() {
-        return repositoryPerifirico.findAll()
+        return repositoryPeriferico.findAll()
                 .stream()
-                .map(repositoryPerifirico::toDTO)
+                .map(PerifericoAdapter::toDTO)
                 .collect(Collectors.toList());
     }
 
     public PerifericoDTO atualizar(Long id, PerifericoDTO dto) {
-        EntityPeriferico existente = repositoryPerifirico.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        EntityPeriferico existente = repositoryPeriferico.findById(id)
+                .orElseThrow(() -> new RuntimeException("periférico n encontrado"));
 
         existente.setNome(dto.getNome());
-        existente.setPreco(dto.getPreco());
-        return PerifericoAdapter.toDTO(repositoryPerifirico.save(existente));
+
+        if (dto.getComputadorId() != null) {
+            EntityComputador computador = repositoryComputador.findById(dto.getComputadorId())
+                    .orElseThrow(() -> new RuntimeException("computador n encontrado"));
+            existente.setEntityComputador(computador);
+        }
+
+        return PerifericoAdapter.toDTO(repositoryPeriferico.save(existente));
     }
 
     public void excluir(Long id) {
-        repositoryPerifirico.deleteById(id);
+        repositoryPeriferico.deleteById(id);
     }
 }
-
-
-
